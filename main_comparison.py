@@ -8,6 +8,19 @@ import matplotlib.ticker as mtick
 from matplotlib.ticker import MultipleLocator
 import base64
 import io
+import seaborn as sns
+
+# Define function for plotting heatmap
+def plot_heatmap(df1, df2):
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+    
+    sns.heatmap(df1.corr(), annot=True, cmap="coolwarm", ax=ax1)
+    ax1.set_title("Heatmap for First Data")
+    
+    sns.heatmap(df2.corr(), annot=True, cmap="coolwarm", ax=ax2)
+    ax2.set_title("Heatmap for Second Data")
+
+    return fig
 
 # Functions from your original code
 def percent_formatter(x, pos):
@@ -148,6 +161,11 @@ def main():
                         with col2:
                             st.write("Scatter Plot")
                             st.pyplot(fig_lin)
+                        #
+                        fig_heatmap = plot_heatmap(df1, df2)
+                        st.write("Heatmaps")
+                        st.pyplot(fig_heatmap) 
+                        #
                     else:
                         st.write("Please enter labels for the data.")
 
