@@ -14,27 +14,30 @@ def percent_formatter(x, pos):
 
 
 def normplot(data1, data2, labval1, labval2):
-    mu = np.mean(data1)
-    sig = np.std(data1)
-    n = len(data1)
-    p = [(i - 0.5) / n for i in range(1, n + 1)]
+    n1 = len(data1)
+    p1 = [(i - 0.5) / n1 for i in range(1, n1 + 1)]
     x1 = np.sort(data1)
-    y1 = norm.ppf(p)
-    x2 = np.sort(data2)
-    y2 = norm.ppf(p)
-    ticks_perc = [0.1, 1, 5, 10, 25, 50, 75, 90, 95, 99, 99.9]
-    ytv = np.percentile(y1, ticks_perc)
-    idxr = np.arange(1, n + 1)
-    if n > 500000:
-        idxr = np.concatenate((np.arange(1, 1000), np.arange(1001, 10000, 5), np.arange(10001, n, 50)))
+    y1 = norm.ppf(p1)
 
-    # Cap the maximum value of idxr to the length of x and y arrays
-    idxr = np.clip(idxr, 0, n - 1)
+    n2 = len(data2)
+    p2 = [(i - 0.5) / n2 for i in range(1, n2 + 1)]
+    x2 = np.sort(data2)
+    y2 = norm.ppf(p2)
+
+    idxr1 = np.arange(1, n1 + 1)
+    if n1 > 500000:
+        idxr1 = np.concatenate((np.arange(1, 1000), np.arange(1001, 10000, 5), np.arange(10001, n1, 50)))
+    idxr1 = np.clip(idxr1, 0, n1 - 1)
+
+    idxr2 = np.arange(1, n2 + 1)
+    if n2 > 500000:
+        idxr2 = np.concatenate((np.arange(1, 1000), np.arange(1001, 10000, 5), np.arange(10001, n2, 50)))
+    idxr2 = np.clip(idxr2, 0, n2 - 1)
 
     fig, ax = plt.subplots()
     
-    ax.scatter(x1[idxr], y1[idxr], label=labval1, s=2, linewidth=0)
-    ax.scatter(x2[idxr], y2[idxr], label=labval2, s=2, linewidth=0)
+    ax.scatter(x1[idxr1], y1[idxr1], label=labval1, s=2, linewidth=0)
+    ax.scatter(x2[idxr2], y2[idxr2], label=labval2, s=2, linewidth=0)
     ax.yaxis.set_ticks_position('both')
     ax.yaxis.set_major_locator(MultipleLocator(1))
     ax.yaxis.set_minor_locator(MultipleLocator(1))
