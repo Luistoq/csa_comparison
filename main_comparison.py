@@ -11,20 +11,10 @@ import io
 import seaborn as sns
 from matplotlib.colors import ListedColormap
 
-#Function to downsample the dataframe
-def downsample_dataframe(df, factor=2):
-    nrows, ncols = df.shape
-    new_nrows = nrows // factor
-    new_df = df.groupby(df.index // factor).mean()
-    return new_df
-
-def plot_downsampled_heatmap(df1, df2, figsize=(12, 6)):
-    df1_downsampled = downsample_dataframe(df1)
-    df2_downsampled = downsample_dataframe(df2)
-    
+def plot_heatmap(df1, df2, figsize=(12, 6)):
     # Compute quantiles
-    quantile_25 = [df1_downsampled.quantile(0.25).values, df2_downsampled.quantile(0.25).values]
-    quantile_50 = [df1_downsampled.quantile(0.50).values, df2_downsampled.quantile(0.50).values]
+    quantile_25 = [df1.quantile(0.25).values, df2.quantile(0.25).values]
+    quantile_50 = [df1.quantile(0.50).values, df2.quantile(0.50).values]
 
     # Create custom colormap
     colors = ["red", "yellow", "green"]
@@ -33,13 +23,13 @@ def plot_downsampled_heatmap(df1, df2, figsize=(12, 6)):
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize)
 
     # Plot heatmap for first data
-    sns.heatmap(df1_downsampled, annot=False, cmap=cmap, ax=ax1,
+    sns.heatmap(df1, annot=False, cmap=cmap, ax=ax1,
                 vmin=quantile_25[0].min(), vmax=quantile_50[0].max(),
                 cbar_kws={"ticks": [quantile_25[0].min(), quantile_50[0].min(), quantile_50[0].max()]})
     ax1.set_title("Heatmap for First Data")
     
     # Plot heatmap for second data
-    sns.heatmap(df2_downsampled, annot=False, cmap=cmap, ax=ax2,
+    sns.heatmap(df2, annot=False, cmap=cmap, ax=ax2,
                 vmin=quantile_25[1].min(), vmax=quantile_50[1].max(),
                 cbar_kws={"ticks": [quantile_25[1].min(), quantile_50[1].min(), quantile_50[1].max()]})
     ax2.set_title("Heatmap for Second Data")
@@ -186,7 +176,7 @@ def main():
                             st.write("Scatter Plot")
                             st.pyplot(fig_lin)
                         #
-                        fig_heatmap = plot_downsampled_heatmap(df1, df2)
+                        fig_heatmap = plot_heatmap(df1, df2)
                         st.write("Heatmaps")
                         st.pyplot(fig_heatmap) 
                         #
