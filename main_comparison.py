@@ -34,7 +34,7 @@ def normplot(data1, data2, labval1, labval2):
     fig, ax = plt.subplots()
     ylimval = (-4, 3)
 
-    if np.max(y1) < 3.1:
+    if np.max(y1) < 2:
         ax.scatter(x1[idxr], y1[idxr], label=labval1, s=2, linewidth=0)
         ax.scatter(x2[idxr], y2[idxr], label=labval2, s=2, linewidth=0)
         ax.set_ylim(*ylimval)
