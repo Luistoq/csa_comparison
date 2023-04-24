@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from scipy.stats import norm
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 import matplotlib.ticker as mtick
 from matplotlib.ticker import MultipleLocator
 import base64
