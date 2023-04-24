@@ -32,25 +32,19 @@ def normplot(data1, data2, labval1, labval2):
     idxr = np.clip(idxr, 0, min(len(x1), len(x2), len(y1), len(y2)) - 1)
 
     fig, ax = plt.subplots()
-    ylimval = (-4, 3)
-
-    if np.max(y1) < 1:
-        ax.scatter(x1[idxr], y1[idxr], label=labval1, s=2, linewidth=0)
-        ax.scatter(x2[idxr], y2[idxr], label=labval2, s=2, linewidth=0)
-        ax.set_ylim(*ylimval)
-    else:
-        ax.scatter(x1[idxr], y1[idxr], label=labval1, s=2, linewidth=0)
-        ax.scatter(x2[idxr], y2[idxr], label=labval2, s=2, linewidth=0)
-        ax.yaxis.set_ticks_position('both')
-        ax.yaxis.set_major_locator(MultipleLocator(1))
-        ax.yaxis.set_minor_locator(MultipleLocator(1))
-        ax.grid(True, which='both', axis='y', alpha=0.5)
-        ax.legend(loc='lower right')
-        plt.xlabel("Thickness (mm)")
-        plt.ylabel("Proportion of area (%) ")
-        ax.yaxis.set_major_formatter(mtick.FuncFormatter(percent_formatter))
-        ax.set_ylim(-4, 3)
-        plt.grid(True, which='both', axis='both', alpha=0.5)
+    
+    ax.scatter(x1[idxr], y1[idxr], label=labval1, s=2, linewidth=0)
+    ax.scatter(x2[idxr], y2[idxr], label=labval2, s=2, linewidth=0)
+    ax.yaxis.set_ticks_position('both')
+    ax.yaxis.set_major_locator(MultipleLocator(1))
+    ax.yaxis.set_minor_locator(MultipleLocator(1))
+    ax.grid(True, which='both', axis='y', alpha=0.5)
+    ax.legend(loc='lower right')
+    plt.xlabel("Thickness (mm)")
+    plt.ylabel("Proportion of area (%) ")
+    ax.yaxis.set_major_formatter(mtick.FuncFormatter(percent_formatter))
+    ax.set_ylim(-4, 3)
+    plt.grid(True, which='both', axis='both', alpha=0.5)
     return fig
 
 def linplot(df1, df2, labval1, labval2):
