@@ -39,8 +39,8 @@ def normplot(data1, data2, labval1, labval2):
     ax.scatter(x1[idxr1], y1[idxr1], label=labval1, s=2, linewidth=0)
     ax.scatter(x2[idxr2], y2[idxr2], label=labval2, s=2, linewidth=0)
     
-    custom_legend = [Line2D([0], [0], marker='o', color='none', label=labval1, markerfacecolor='C0', markersize=8),
-                 Line2D([0], [0], marker='o', color='none', label=labval2, markerfacecolor='C1', markersize=8)]
+    custom_legend = [Line2D([0], [0], marker='o', color='none', label=labval1, markerfacecolor=plt.get_cmap('tab10')(0), markersize=8),
+                 Line2D([0], [0], marker='o', color='none', label=labval2, markerfacecolor=plt.get_cmap('tab10')(1), markersize=8)]
 
     ax.yaxis.set_ticks_position('both')
     ax.yaxis.set_major_locator(MultipleLocator(1))
