@@ -25,7 +25,7 @@ def normplot(data1, data2, labval1, labval2):
     ticks_perc = [0.1, 1, 5, 10, 25, 50, 75, 90, 95, 99, 99.9]
     ytv = np.percentile(y1, ticks_perc)
     idxr = np.arange(1, n + 1)
-    if n > 20000:
+    if n > 200000:
         idxr = np.concatenate((np.arange(1, 1000), np.arange(1001, 10000, 5), np.arange(10001, n, 50)))
 
     # Cap the maximum value of idxr to the length of x and y arrays
