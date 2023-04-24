@@ -9,6 +9,7 @@ from matplotlib.ticker import MultipleLocator
 import base64
 import io
 import seaborn as sns
+from matplotlib.colors import ListedColormap
 
 #Function to downsample the dataframe
 def downsample_dataframe(df, factor=2):
@@ -17,17 +18,30 @@ def downsample_dataframe(df, factor=2):
     new_df = df.groupby(df.index // factor).mean()
     return new_df
 
-# Define function for plotting heatmap
 def plot_downsampled_heatmap(df1, df2, figsize=(12, 6)):
     df1_downsampled = downsample_dataframe(df1)
     df2_downsampled = downsample_dataframe(df2)
     
+    # Compute quantiles
+    quantile_25 = [df1_downsampled.quantile(0.25).values, df2_downsampled.quantile(0.25).values]
+    quantile_50 = [df1_downsampled.quantile(0.50).values, df2_downsampled.quantile(0.50).values]
+
+    # Create custom colormap
+    colors = ["red", "yellow", "green"]
+    cmap = ListedColormap(colors)
+
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize)
-    
-    sns.heatmap(df1_downsampled.corr(), annot=False, cmap="coolwarm", ax=ax1)
+
+    # Plot heatmap for first data
+    sns.heatmap(df1_downsampled, annot=False, cmap=cmap, ax=ax1,
+                vmin=quantile_25[0].min(), vmax=quantile_50[0].max(),
+                cbar_kws={"ticks": [quantile_25[0].min(), quantile_50[0].min(), quantile_50[0].max()]})
     ax1.set_title("Heatmap for First Data")
     
-    sns.heatmap(df2_downsampled.corr(), annot=False, cmap="coolwarm", ax=ax2)
+    # Plot heatmap for second data
+    sns.heatmap(df2_downsampled, annot=False, cmap=cmap, ax=ax2,
+                vmin=quantile_25[1].min(), vmax=quantile_50[1].max(),
+                cbar_kws={"ticks": [quantile_25[1].min(), quantile_50[1].min(), quantile_50[1].max()]})
     ax2.set_title("Heatmap for Second Data")
 
     return fig
