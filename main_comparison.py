@@ -29,7 +29,7 @@ def normplot(data1, data2, labval1, labval2):
         idxr = np.concatenate((np.arange(1, 1000), np.arange(1001, 10000, 5), np.arange(10001, n, 50)))
 
     # Cap the maximum value of idxr to the length of x and y arrays
-    idxr = np.minimum(idxr, len(x1) - 1)
+    idxr = np.clip(idxr, 0, min(len(x1), len(x2), len(y1), len(y2)) - 1)
 
     fig, ax = plt.subplots()
     
