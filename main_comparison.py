@@ -64,9 +64,11 @@ def linplot(df1, df2, labval1, labval2):
         pr2 = (2 * np.arange(1, nd2 + 1) - 1) / 2 / nd2  # hazen plot plot pos for prob exceedance
         plt2 = plt.scatter(np.sort(df2), pr2, s=2, linewidth=0,
                            label=labval2, marker='o', color='darkblue')
+    custom_legend = [Line2D([0], [0], marker='o', color='none', label=labval1, markerfacecolor=plt.get_cmap('tab10')(0), markersize=8),
+                 Line2D([0], [0], marker='o', color='none', label=labval2, markerfacecolor=plt.get_cmap('tab10')(1), markersize=8)]
     plt.xlabel("Thickness (mm)")
     plt.ylabel("Proportion of area (%)")
-    plt.legend(loc='lower right')
+    plt.legend(handles=custom_legend, loc='lower right')
     plt.grid(True, which='both', axis='both', alpha=0.5)
     return fig
 
