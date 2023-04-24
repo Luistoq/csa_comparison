@@ -10,14 +10,24 @@ import base64
 import io
 import seaborn as sns
 
+#Function to downsample the dataframe
+def downsample_dataframe(df, factor=2):
+    nrows, ncols = df.shape
+    new_nrows = nrows // factor
+    new_df = df.groupby(df.index // factor).mean()
+    return new_df
+
 # Define function for plotting heatmap
-def plot_heatmap(df1, df2):
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+def plot_downsampled_heatmap(df1, df2, figsize=(12, 6)):
+    df1_downsampled = downsample_dataframe(df1)
+    df2_downsampled = downsample_dataframe(df2)
     
-    sns.heatmap(df1.corr(), annot=True, cmap="coolwarm", ax=ax1)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize)
+    
+    sns.heatmap(df1_downsampled.corr(), annot=False, cmap="coolwarm", ax=ax1)
     ax1.set_title("Heatmap for First Data")
     
-    sns.heatmap(df2.corr(), annot=True, cmap="coolwarm", ax=ax2)
+    sns.heatmap(df2_downsampled.corr(), annot=False, cmap="coolwarm", ax=ax2)
     ax2.set_title("Heatmap for Second Data")
 
     return fig
@@ -162,7 +172,7 @@ def main():
                             st.write("Scatter Plot")
                             st.pyplot(fig_lin)
                         #
-                        fig_heatmap = plot_heatmap(df1, df2)
+                        fig_heatmap = plot_downsampled_heatmap(df1, df2)
                         st.write("Heatmaps")
                         st.pyplot(fig_heatmap) 
                         #
