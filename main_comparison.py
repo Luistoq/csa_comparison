@@ -12,6 +12,10 @@ import seaborn as sns
 from matplotlib.colors import ListedColormap
 
 def plot_heatmap(df1, df2, figsize=(12, 6)):
+    # Convert dataframes to numeric
+    df1 = df1.apply(pd.to_numeric, errors='coerce')
+    df2 = df2.apply(pd.to_numeric, errors='coerce')
+    
     # Compute quantiles
     quantile_25 = [df1.quantile(0.25).values, df2.quantile(0.25).values]
     quantile_50 = [df1.quantile(0.50).values, df2.quantile(0.50).values]
