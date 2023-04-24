@@ -42,7 +42,7 @@ def normplot(data1, data2, labval1, labval2):
     ax.legend(loc='lower right')
     plt.xlabel("Thickness (mm)")
     plt.ylabel("Proportion of area (%) ")
-    ax.yaxis.set_major_formatter(mtick.FuncFormatter(percent_formatter))
+#     ax.yaxis.set_major_formatter(mtick.FuncFormatter(percent_formatter))
     plt.grid(True, which='both', axis='both', alpha=0.5)
     return fig
 
